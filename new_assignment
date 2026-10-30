@@ -1,0 +1,221 @@
+
+// 1. Reverse a string (without using reverse())
+ 
+// Start from  last and go to the first character adding each character to a new string. so new 
+// become opposite to old.
+// Time Complexity: O(n) -  visit every character once.
+ 
+function reverseString(str) {              
+  let result = "";
+  for (let i = str.length - 1; i >= 0; i--) {
+    result = result + str[i];
+  }
+  return result;
+}
+ 
+console.log("1. reverseString('hello'):", reverseString("hello"));
+ 
+ 
+// 2. Check whether a string is a palindrome
+ 
+// Reverse the string and compare it to the original.
+// if its exact match with old then it is true and we put split to make list and revrese to reveres the 
+// list then join to make in string
+// Time Complexity: O(n) - visit every character once.
+ 
+function isPalindrome(str) {
+    let cleanStr = str.toLowerCase();
+    let reversedStr = cleanStr.split('').reverse().join('');
+    
+    return cleanStr === reversedStr;
+}
+ 
+console.log("2. isPalindrome('madam'):", isPalindrome("madam"));
+console.log("   isPalindrome('hello'):", isPalindrome("hello"));
+ 
+ 
+// 3. Count vowels and consonants in a string
+ 
+// Loop through each character. If come a, e, i, o or u then vowel . If if not consonant.
+// Time Complexity: O(n) - one pass through the string.
+ 
+function countVowelsConsonants(str) {
+  let vowels = 0;
+  let consonants = 0;
+  str = str.toLowerCase();
+ 
+  for (let i = 0; i < str.length; i++) {
+    let ch = str[i];
+    if (ch >= "a" && ch <= "z") {
+      if (ch === "a" || ch === "e" || ch === "i" || ch === "o" || ch === "u") {
+        vowels++;
+      } else {
+        consonants++;
+      }
+    }
+  }
+  return { vowels: vowels, consonants: consonants };
+}
+ 
+console.log("3. countVowelsConsonants('Hello World'):", countVowelsConsonants("Hello World"));
+ 
+ 
+// 4. Find the second-largest distinct number in an array
+ 
+// Keep two variable largest and second While loopingif a number is bigger than largest, 
+// the old largest becomes second.
+// If it is between second and largest (and not equal to largest),it becomes second. Duplicates of the
+//  largest are skipped. Time Complexity: O(n) 
+ 
+function secondLargest(arr) {
+  let largest = -Infinity;
+  let second = -Infinity;
+ 
+  for (let i = 0; i < arr.length; i++) {
+    let num = arr[i];
+    if (num > largest) {
+      second = largest;
+      largest = num;
+    } else if (num > second && num !== largest) {
+      second = num;
+    }
+  }
+ 
+  if (second === -Infinity) {
+    return null; // no second largest exists
+  }
+  return second;
+}
+ 
+console.log("4. secondLargest([10, 5, 20, 8, 20]):", secondLargest([10, 5, 20, 8, 20]));
+ 
+ 
+// 5. Remove duplicate elements from an array (without Set)
+ 
+// Make  empty  array For each element in theoriginal array check if it is already in result
+// If no push it in This keeps the original order Time Complexity: O(n^2) - for every element 
+// we may search theresult array again.
+ 
+function removeDuplicates(arr) {
+  let result = [];
+ 
+  for (let i = 0; i < arr.length; i++) {
+    let found = false;
+    for (let j = 0; j < result.length; j++) {
+      if (result[j] === arr[i]) {
+        found = true;
+        break;
+      }
+    }
+    if (found === false) {
+      result.push(arr[i]);
+    }
+  }
+  return result;
+}
+ 
+console.log("5. removeDuplicates([1, 2, 2, 3, 1]):", removeDuplicates([1, 2, 2, 3, 1]));
+ 
+ 
+// 6. Find the sum of all even numbers in an array
+ 
+// Loop on  array If a number divided by 2 gives remainder 0  add it to the sum.Time Complexity: O(n) 
+ 
+function sumOfEvens(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] % 2 === 0) {
+      sum = sum + arr[i];
+    }
+  }
+  return sum;
+}
+ 
+console.log("6. sumOfEvens([1, 2, 3, 4, 5, 6]):", sumOfEvens([1, 2, 3, 4, 5, 6]));
+ 
+ 
+// 7. Find the frequency of a given element in an array
+ 
+//  starting at 0. Go by the array and increase the count every time the element matches 
+// Time Complexity: O(n)
+ 
+function findFrequency(arr, target) {
+  let count = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) {
+      count++;
+    }
+  }
+  return count;
+}
+ 
+console.log("7. findFrequency([1, 2, 2, 3, 2], 2):", findFrequency([1, 2, 2, 3, 2], 2));
+ 
+ 
+// 8. Check whether two strings are anagrams
+ 
+//  Two strings are anagrams if they have the same letters ans same no. of timeFirst I check the 
+// lengths. Then I count each letter of the first string  and subtract the counts using the second string
+//  If any count goes below 0 they are not anagrams.
+// Time Complexity: O(n)
+ 
+function isAnagram(str1, str2) {
+  str1 = str1.toLowerCase();
+  str2 = str2.toLowerCase();
+ 
+  if (str1.length !== str2.length) {
+    return false;
+  }
+ 
+  let count = {};
+ 
+  for (let i = 0; i < str1.length; i++) {
+    let ch = str1[i];
+    if (count[ch] === undefined) {
+      count[ch] = 1;
+    } else {
+      count[ch]++;
+    }
+  }
+ 
+  for (let i = 0; i < str2.length; i++) {
+    let ch = str2[i];
+    if (count[ch] === undefined || count[ch] === 0) {
+      return false;
+    }
+    count[ch]--;
+  }
+  return true;
+}
+ 
+console.log("8. isAnagram('listen', 'silent'):", isAnagram("listen", "silent"));
+console.log("   isAnagram('hello', 'world'):", isAnagram("hello", "world"));
+ 
+ 
+// 9. Move all zeros to the end (keep order of non-zero elements)
+//  Use a variable "pos" which tells where the next non-zeronumber should go. Loop by the
+//  array and put every non-zero index pos, then increase pos. After that, fill remaining places with 0
+// Time Complexity: O(n) -
+ 
+function moveZeros(arr) {
+  let pos = 0;
+ 
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== 0) {
+      arr[pos] = arr[i];
+      pos++;
+    }
+  }
+ 
+  for (let i = pos; i < arr.length; i++) {
+    arr[i] = 0;
+  }
+  return arr;
+}
+ 
+console.log("9. moveZeros([0, 1, 0, 3, 12]):", moveZeros([0, 1, 0, 3, 12]));
+ 
+
+
+
+
